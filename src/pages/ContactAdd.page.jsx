@@ -64,13 +64,13 @@ const ContactAddPage = () => {
         onSubmit={handleFormData}
         className="container flex flex-col space-y-12 relative"
       >
-        <h1 className=" font-bold text-white">
+        <p className=" font-bold text-white">
           {location?.state?.edit ? (
-            <h1>Update Contact</h1>
+            <span>Update Contact</span>
           ) : (
-            <h1>Add Contact</h1>
+            <span>Add Contact</span>
           )}
-        </h1>
+        </p>
         {error && (
           <div
             className="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded fixed top-1 left-10 right-10"
@@ -129,7 +129,7 @@ const ContactAddPage = () => {
         <ButtonComponents type="submit">
           {loading ? (
             <>
-              <h1>Loading....</h1>
+              <p>Loading....</p>
             </>
           ) : (
             <>
@@ -138,18 +138,18 @@ const ContactAddPage = () => {
                   {" "}
                   {formData.editLoading ? (
                     <>
-                      <h1>Loading</h1>
+                      <p>Loading</p>
                     </>
                   ) : (
                     <>
                       {" "}
-                      <h1>Update</h1>
+                      <p>Update</p>
                     </>
                   )}
                 </>
               ) : (
                 <>
-                  <h1>Add</h1>{" "}
+                  <p>Add</p>{" "}
                 </>
               )}
             </>

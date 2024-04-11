@@ -23,7 +23,7 @@ const ContactPage = () => {
     })();
   }, [useFetch,deleteContact]);
   const contactData=(data?.contacts.data)
-  console.log(contactData)
+  // console.log(contactData)
 
   return <div>
     {loading ? <h1 className="text-white">Loading...</h1> : <>
