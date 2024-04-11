@@ -4,7 +4,12 @@ export default {
     "./index.html",
     "./src/**/*.{js,ts,jsx,tsx}",
   ],  theme: {
-    extend: {},
+    extend: {
+      backgroundImage:{
+        "leaf-bg" : "url('/img/botanical-leaves_23-2148121721.jpg')",
+        "leaf-bg-two":"url('img/1323467.png')"
+      }
+    },
   },
   plugins: [],
 }

@@ -4,6 +4,9 @@ import ButtonComponents from "../components/Button.components";
 import { useNavigate } from "react-router-dom";
 import { Login } from "../service/auth.service";
 import useFetch from "../Hook/useFetch";
+import { IoWarningOutline } from "react-icons/io5";
+import PreventComponents from "../components/Prevent.components";
+
 
 const LogInPage = () => {
   const nav = useNavigate();
@@ -12,13 +15,13 @@ const LogInPage = () => {
     password: "",
   });
 
-  const [fetch, setFetch] = useState({
-    loading: false,
-    data: null,
-    error: null,
-  });
+//   const [fetch, setFetch] = useState({
+//     loading: false,
+//     data: null,
+//     error: null,
+//   });
 
-//   const {loading,error,data}=useFetch()
+  const {handleDel,loading,error,data}=useFetch(Login)
 
   const handleOnchange = (e) => {
     setFormData((pre) => ({
@@ -28,32 +31,29 @@ const LogInPage = () => {
   };
   const formDataHandler = async (e) => {
     e.preventDefault();
-    setFetch((pre) => ({ ...pre, loading: true }));
-    console.log(fetch)
-    const res =await Login(formData);
-    console.log(res.data);
-    if (res.error) {
-      setFetch((pre) => ({ ...pre, loading: false, error: res.msg }));
-    } else {
-      setFetch((pre) => ({ ...pre, loading: false, data: res.data }));
-    }
-    console.log(fetch);
+    const data=handleDel(formData)
+    // console.log(data);
   };
 
   useEffect(()=>{
-    if(fetch?.data){
+    if(data?.success){
         nav("/home")
     }
-  },[fetch])
+  },[data])
 
 
   return (
-    <div className="max-sm:w-full max-md:w-3/5 w-1/3 max-xl:w-2/4 mx-auto max-sm:h-screen  max-sm:px-3">
+    <PreventComponents fail={"/home"} check={localStorage.getItem("auth")}>
+        <div className=" text-white max-sm:w-full max-md:w-3/5 w-1/3 max-xl:w-2/4 mx-auto max-sm:h-screen  max-sm:px-3">
       <form
         onSubmit={formDataHandler}
-        className="container flex flex-col space-y-12 "
+        className="container flex flex-col space-y-12 relative "
       >
         <h1 className=" mx-auto font-bold text-xl">Log In</h1>
+
+        {error && <h1 className=" fixed top-10 left-20 right-20 justify-center flex items-center gap-2 text-red-800 bg-opacity-35 bg-yellow-600"><IoWarningOutline />
+{error}</h1>}
+
         <FromInputComponents
           value={formData.email}
           onChange={handleOnchange}
@@ -70,7 +70,9 @@ const LogInPage = () => {
           type={"password"}
           placeholder={"xxxxxxx"}
         />
-        <ButtonComponents type="submit" />
+        <ButtonComponents type="submit">
+            {loading ? <h1>Loading...</h1> : <h1>Log In</h1>}
+        </ButtonComponents>
       </form>
       <div>
         <p>
@@ -86,6 +88,7 @@ const LogInPage = () => {
         </p>
       </div>
     </div>
+    </PreventComponents>
   );
 };
 
