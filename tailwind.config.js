@@ -7,7 +7,8 @@ export default {
     extend: {
       backgroundImage:{
         "leaf-bg" : "url('/img/botanical-leaves_23-2148121721.jpg')",
-        "leaf-bg-two":"url('img/1323467.png')"
+        "leaf-bg-two":"url('img/1323467.png')",
+        "leaf-bg-http":"url('https://images4.alphacoders.com/132/1323467.png')"
       }
     },
   },
