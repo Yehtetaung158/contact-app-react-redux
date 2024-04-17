@@ -6,9 +6,14 @@ import { Register } from "../service/auth.service";
 import useFetch from "../Hook/useFetch";
 import { IoWarningOutline } from "react-icons/io5";
 import PreventComponents from "../components/Prevent.components";
+import { useDispatch, useSelector } from "react-redux";
+import { RegisterAction } from "../store/action/auth.action";
 
 const RegisterPage = () => {
   const nav = useNavigate();
+  const {loading,error,data}=useSelector((store)=>store.auth)
+  console.log(loading,error,data);
+  const dispatch=useDispatch()
 
   const [formData, setFormData] = useState({
     name: "",
@@ -17,7 +22,7 @@ const RegisterPage = () => {
     password_confirmation: "",
   });
 
-  const { handleDel, loading, error, data } = useFetch(Register);
+  // const { handleDel, loading, error, data } = useFetch(Register);
 
   const handleOnchange = (e) => {
     setFormData((pre) => ({
@@ -27,8 +32,10 @@ const RegisterPage = () => {
   };
   const formDataHandler = (e) => {
     e.preventDefault();
-    const res = handleDel(formData);
-    console.log(res);
+    RegisterAction(dispatch,formData)
+    // const res = handleDel(formData);
+    // console.log(res);
+
   };
   useFetch(() => {
     if (data.success) {

@@ -6,10 +6,16 @@ import { Login } from "../service/auth.service";
 import useFetch from "../Hook/useFetch";
 import { IoWarningOutline } from "react-icons/io5";
 import PreventComponents from "../components/Prevent.components";
+import { useSelector, useDispatch } from "react-redux";
+import { LoginAction } from "../store/action/auth.action";
 
 
 const LogInPage = () => {
   const nav = useNavigate();
+
+  const {loading,error,data}=useSelector((store)=>store.auth);
+  console.log(loading,error,data);
+  const dispatch=useDispatch()
   const [formData, setFormData] = useState({
     email: "",
     password: "",
@@ -21,7 +27,7 @@ const LogInPage = () => {
 //     error: null,
 //   });
 
-  const {handleDel,loading,error,data}=useFetch(Login)
+  // const {handleDel,loading,error,data}=useFetch(Login)
 
   const handleOnchange = (e) => {
     setFormData((pre) => ({
@@ -31,7 +37,8 @@ const LogInPage = () => {
   };
   const formDataHandler = async (e) => {
     e.preventDefault();
-    const data=handleDel(formData)
+    // const data=handleDel(formData)
+    LoginAction(dispatch,formData)
     // console.log(data);
   };
 
