@@ -8,6 +8,7 @@ import { IoWarningOutline } from "react-icons/io5";
 import PreventComponents from "../components/Prevent.components";
 import { useSelector, useDispatch } from "react-redux";
 import { LoginAction } from "../store/action/auth.action";
+import { login, processing } from "../store/slice/auth.slice";
 
 
 const LogInPage = () => {
@@ -20,6 +21,14 @@ const LogInPage = () => {
     email: "",
     password: "",
   });
+
+  useEffect(()=>{
+    (()=>{
+      if(data){
+        nav("/home")
+    }
+    })()
+  },[data])
 
 //   const [fetch, setFetch] = useState({
 //     loading: false,
@@ -38,16 +47,13 @@ const LogInPage = () => {
   const formDataHandler = async (e) => {
     e.preventDefault();
     // const data=handleDel(formData)
-    LoginAction(dispatch,formData)
-    // console.log(data);
+    // LoginAction(dispatch,formData)
+    dispatch(processing())
+    const res=await Login(formData);
+    console.log(res.data);
+    dispatch(login(res.data))
+
   };
-
-  useEffect(()=>{
-    if(data?.success){
-        nav("/home")
-    }
-  },[data])
-
 
   return (
     <PreventComponents fail={"/home"} check={localStorage.getItem("auth")}>
